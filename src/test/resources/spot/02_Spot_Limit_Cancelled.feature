@@ -1,8 +1,8 @@
 Feature: Seller Spot Limit Full Filled Order Placement and Cancellation
 
-  In order to trade assets on the platform,
-  users can place spot limit sell orders after logging in,
-  which can be canceled.
+  Order Type combination: Limit-Limit
+  Order Statuses after the trade:
+  Limit Sell - Cancelled
 
   Scenario Outline: Check seller login is successful with valid credentials
     Given user is on login
@@ -14,7 +14,7 @@ Feature: Seller Spot Limit Full Filled Order Placement and Cancellation
       | email | password |
       | shehans+EX2@xeptagon.com | EX2@xeptagon.coM |
 
-  Scenario Outline: Validate account balance before placing limit sell order
+  Scenario Outline: Validate seller account balance before placing limit sell order
     Given seller navigate to the account page
     When seller retrieves the before account balances
     Then seller retrieves the before credit balances for "<carbonCredit>"
@@ -38,8 +38,29 @@ Feature: Seller Spot Limit Full Filled Order Placement and Cancellation
       | CAR.088       | 8.00             | 1        |
 
   Scenario: Seller should able to cancel all spot limit sell orders
-    Given seller cancels all open spot limit sell orders
-    Then all orders should be canceled successfully
+    Given seller cancels
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  all open spot limit sell orders
+    Then seller all orders should be canceled successfully
 
   Scenario: Validate seller account balance after successful cancel all open orders
     Given seller navigate to the account page

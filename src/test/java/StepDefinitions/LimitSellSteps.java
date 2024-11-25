@@ -65,17 +65,18 @@ public class LimitSellSteps {
 
     @And("seller cancels all open spot limit sell orders")
     public void seller_cancels_all_open_spot_limit_sell_orders() throws InterruptedException {
-        // Wait for 10 seconds
+        // Wait for 4 seconds
         Thread.sleep(6000);
 
         sellerSpotPage.clickCancelAllButton();
-        Assert.assertTrue(sellerSpotPage.isSuccessMessageDisplayed(), "Success message is not displayed");
+//        sellerSpotPage.clickNotification();
+        //Assert.assertTrue(sellerSpotPage.isSuccessMessageDisplayed(), "Success message is not displayed");
 
         String expectedMessage = "Your order cancellation request to cancel all orders has been successfully placed";
         Assert.assertEquals(sellerSpotPage.getSuccessMessageText(), expectedMessage);
     }
 
-    @And("all orders should be canceled successfully")
+    @And("seller all orders should be canceled successfully")
     public void all_orders_should_be_canceled_successfully() {
         // Refresh the current page
         driver.navigate().refresh();
@@ -101,6 +102,7 @@ public class LimitSellSteps {
         Assert.assertTrue(actualNotification.matches(expectedNotificationPattern),
                 "Notification does not match the expected pattern. Actual notification: " + actualNotification);
     }
+
 
 
 }

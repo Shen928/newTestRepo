@@ -275,6 +275,25 @@ public class BuyerAccountSteps {
 //        System.out.println("New Blocked Amount AfterCancel  : " + newAccountBalances.get("blockedAmountAfterCancel"));
     }
 
+    @Given("buyer retrieve the new buyer account balance after partially terminated")
+    public void buyer_retrieve_the_new_buyer_account_balance_after_partially_terminated() {
+        driver.get("http://localhost:5173/myAssets/myAccount");
+
+        // Cast WebDriver to JavascriptExecutor
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Get value from local storage and store it in the class variable
+        spotLimitBuyCommission = (String) js.executeScript("return localStorage.getItem('spotLimitBuyCommission');");
+
+        // Retrieve balance values after the limit buy order is placed
+        newAccountBalances.put("grossBalanceAfterPartiallyTerminated", myAccountPage.getGrossBalance());
+        newAccountBalances.put("availableBalanceAfterPartiallyTerminated", myAccountPage.getAvailableBalance());
+        newAccountBalances.put("blockedAmountAfterPartiallyTerminated", myAccountPage.getBlockedBalance());
+//        System.out.println("New Gross Balance AfterCancel : " + newAccountBalances.get("grossBalanceAfterCancel"));
+//        System.out.println("New Available Balance AfterCancel : " + newAccountBalances.get("availableBalanceAfterCancel"));
+//        System.out.println("New Blocked Amount AfterCancel  : " + newAccountBalances.get("blockedAmountAfterCancel"));
+    }
+
     @And("buyer fiat currency block amount should be released and available balance increased")
     public void buyer_fiat_currency_block_amount_should_be_released_and_available_balance_increased() {
 
@@ -290,6 +309,24 @@ public class BuyerAccountSteps {
 
         Assert.assertEquals(blockedAmountAfterCancel, initialBlockedBalance, 0.01,"Fiat currency blocked amount should not be changed after cancelled spot limit buy partially filled order");
         Assert.assertEquals(availableBalanceAfterCancel, expectedAccountBalance, 0.01,"Fiat currency initial available balance amount should be equal to new available balance after cancelled spot limit buy partially filled order");
+
+    }
+
+    @When("buyer fiat currency block amount should be released and available balance increased after partially terminated")
+    public void buyer_fiat_currency_block_amount_should_be_released_and_available_balance_increased_after_partially_terminated() {
+
+        Double remainBlockedAmount = (Double) ScenarioContext.get("remainBlockedAmount");
+
+        Double initialBlockedBalance = initialAccountBalances.get("blockedAmount");
+        Double newAccountBalance = newAccountBalances.get("availableBalance");
+
+        Double availableBalanceAfterPartiallyTerminated = newAccountBalances.get("availableBalanceAfterPartiallyTerminated");
+        Double blockedAmountAfterPartiallyTerminated = newAccountBalances.get("blockedAmountAfterPartiallyTerminated");
+
+        double expectedAccountBalance = newAccountBalance + remainBlockedAmount;
+
+        Assert.assertEquals(blockedAmountAfterPartiallyTerminated, initialBlockedBalance, 0.01,"Fiat currency blocked amount should not be changed after cancelled spot limit buy partially filled order");
+        Assert.assertEquals(availableBalanceAfterPartiallyTerminated, expectedAccountBalance, 0.01,"Fiat currency initial available balance amount should be equal to new available balance after cancelled spot limit buy partially filled order");
 
     }
 

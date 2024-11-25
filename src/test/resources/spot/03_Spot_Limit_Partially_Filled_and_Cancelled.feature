@@ -1,10 +1,10 @@
 
-Feature: Spot Limit Full Filled Order Placement
+Feature: Seller Spot Limit Partially Filled Order Placement and Cancelled
 
   Order Type combination: Limit-Limit
   Order Statuses after the trade:
   Limit Sell - Filled
-  Limit Buy - Filled
+  Limit Buy - Partially Filled and Cancelled
 
   Scenario Outline: Check seller login is successful with valid credentials
     Given user is on login
@@ -12,7 +12,7 @@ Feature: Spot Limit Full Filled Order Placement
     Then clicks on Login Button
     And user is navigate to market page
     Examples:
-      | email                    | password         |
+      | email | password |
       | shehans+EX2@xeptagon.com | EX2@xeptagon.coM |
 
   Scenario Outline: Validate seller account balance before placing limit sell order
@@ -23,7 +23,7 @@ Feature: Spot Limit Full Filled Order Placement
       | carbonCredit  |
       | CAR.088       |
 
-  Scenario Outline: Place a Limit Sell Order
+  Scenario Outline: Place a Sell Spot Limit Order
     Given the seller navigates to the spot order placement page "<carbonCredit>"
     When the seller selects the order type
     Then the seller enters a limit sell price of "<limit_sell_price>"
@@ -32,8 +32,8 @@ Feature: Spot Limit Full Filled Order Placement
     And the sell order should be placed successfully
     Examples:
       | carbonCredit  | limit_sell_price | quantity |
-      | CAR.088       | 5.00             | 1        |
-#      | 5.00             | 2        |
+      | CAR.088       | 5.00             | 2        |
+
 
   Scenario Outline: Check buyer login is successful with valid credentials
     Given user is on login
@@ -52,7 +52,7 @@ Feature: Spot Limit Full Filled Order Placement
       | carbonCredit  |
       | CAR.088       |
 
-  Scenario Outline: Place a Limit Buy Order
+  Scenario Outline: Place a Buy Spot Limit Order
     Given the buyer navigates to the spot order placement page "<carbonCredit>"
     When the buyer selects the order type
     Then the buyer enters a limit buy price of "<limit_buy_price>"
@@ -62,17 +62,30 @@ Feature: Spot Limit Full Filled Order Placement
     And the buyer info notification should be displayed
     Examples:
       | carbonCredit  | limit_buy_price  | quantity |
-      | CAR.088       | 5.00             | 1        |
+      | CAR.088       | 5.00             | 7        |
 
-  Scenario: Validate buyer account balances after successful filled trade
+  Scenario: Validate buyer account balance after executing spot limit matching order
     Given buyer retrieve the after account balance
     When buyer validate that the gross balance has decreased
     Then buyer validate that the available balance has decreased
+    And buyer validate that the block amount has increased
 
-  Scenario Outline: Validate buyer credit balances after successful filled trade
+  Scenario Outline: Validate buyer credit balance after executing spot limit matching order
     Given buyer retrieves the after credit balances "<carbonCredit>"
     When buyer validate that the total credit balance has increased
     Then buyer validate that the available credit balance has increased
+    Examples:
+      | carbonCredit  |
+      | CAR.088       |
+
+  Scenario Outline: Buyer cancels partially filled open spot limit buy order
+    Given buyer retrieve the after account balance
+    When the buyer navigates to the spot order placement page "<carbonCredit>"
+    Then the buyer cancels the partially filled open spot limit buy order
+    And the partially filled spot order should be canceled successfully
+    And buyer retrieve the new buyer account balance after cancelling
+    And buyer fiat currency block amount should be released and available balance increased
+#    And buyer logout from application
     Examples:
       | carbonCredit  |
       | CAR.088       |
@@ -91,3 +104,10 @@ Feature: Spot Limit Full Filled Order Placement
     Examples:
       | carbonCredit  |
       | CAR.088       |
+
+
+
+
+
+
+

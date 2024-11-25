@@ -46,8 +46,7 @@ public class SpotPage {
     @FindBy(css = "[data-test='cancel-all-btn']")
     WebElement cancelAllButton;
 
-    @FindBy(css = "[data-test='cancel-now']")
-    WebElement cancelNowButton;
+
 
     // Locate all order id rows
     @FindBy(css = "[data-test='openOrderId']")
@@ -107,14 +106,24 @@ public class SpotPage {
     }
 
     public String getSuccessMessageText() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(successMessage));
         return successMessage.getText();
     }
+
+    @FindBy(css = "[data-test='cancel-now']")
+    WebElement cancelNowButton;
 
     public void clickCancelAllButton(){
         cancelAllButton.click();
         cancelNowButton.click();
 
+
     }
+
+//    public void clickNotification(){
+//        infoNotification.click();
+//    }
 
     public boolean areAllOrdersCanceled() {
         return openOrderIds.isEmpty(); // Returns true if no open order IDs are found

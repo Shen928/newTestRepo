@@ -94,7 +94,7 @@ public class SellerAccountSteps {
         creditsBalances.put("blockedCredits", myAccountPage.getBlockedCredits(carbonCredit));
     }
 
-    @Then("seller retrieve the after account balance")
+    @Given("seller retrieve the after account balance")
     public void seller_retrieve_the_after_account_balance() {
         driver.get("http://localhost:5173/myAssets/myAccount");
 
@@ -109,7 +109,7 @@ public class SellerAccountSteps {
 
     }
 
-    @And("seller retrieves the after credit balances {string}")
+    @Given("seller retrieves the after credit balances {string}")
     public void seller_retrieves_the_after_credit_balances(String carbonCredit) {
 
         // Retrieve balance values after the buy order is placed)
@@ -160,7 +160,7 @@ public class SellerAccountSteps {
         Assert.assertEquals(newAvailableBalance, expectedAvailableBalance, 0.01, "Fiat currency available balance should match the expected new available balance after sell order");
     }
 
-    @And("seller validate that the total credit balance has decreased")
+    @When("seller validate that the total credit balance has decreased")
     public void seller_validate_that_the_total_credit_has_decreased() {
 
         // Retrieve the stored price and quantity
@@ -177,7 +177,7 @@ public class SellerAccountSteps {
 
     }
 
-    @And("seller validate that the available credit balance has decreased")
+    @Then("seller validate that the available credit balance has decreased")
     public void buyer_validate_that_the_available_credit_balance_has_decreased() {
         // Retrieve the stored price and quantity
         String quantity = (String) ScenarioContext.get("limitSellQuantity");
@@ -204,7 +204,7 @@ public class SellerAccountSteps {
         Assert.assertEquals(newAvailableBalance, initialAvailableBalance, 0.01, "Fiat currency available balance should not be changed after canceled spot limit sell orders");
     }
 
-    @And("the available carbon credit balance should equal the initial credit balance")
+    @Then("the available carbon credit balance should equal the initial credit balance")
     public void available_carbon_credit_balance_should_equal_the_initial_credit_balance() {
         // Logic to compare the available carbon credit balance with the initial credit balance
 
@@ -217,10 +217,19 @@ public class SellerAccountSteps {
 //        System.out.println("newAvailableCredits " + newAvailableCredits);
     }
 
-    @When("the seller validates that the blocked balance  has increased")
+    @Then("the seller validates that the blocked balance has increased")
     public void seller_validate_that_the_blocked_balance_has_increased() {
+        // Cast WebDriver to JavascriptExecutor
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Get commission value from local storage and store it in the class variable
+        spotLimitSellCommission = (String) js.executeScript("return localStorage.getItem('spotLimitSellCommission');");
+
+        spotLimitBuyCommission = (String) js.executeScript("return localStorage.getItem('spotLimitBuyCommission');");
+
+
         // Retrieve the stored price and quantity
-        //Here we use buy price and sell price because this step we use in terminated feature file.
+        //Here we use buy price and buy quantity because this step we use in terminated feature file.
         // Seller act as a buyer now for placed self matching order
         String buyPrice = (String) ScenarioContext.get("limitBuyPrice");
         String buyQuantity = (String) ScenarioContext.get("limitBuyQuantity");
@@ -242,7 +251,7 @@ public class SellerAccountSteps {
         Assert.assertEquals(newBlockedAmount, expectedBlockedBalance, 0.01, "Fiat currency blocked amount  should be increased");
     }
 
-    @Then("the seller validates that the available balance has decreased")
+    @And("the seller validates that the available balance has decreased")
     public void seller_validate_that_the_available_balance_has_decreased() {
 
         Double initialAvailableBalance = initialAccountBalances.get("availableBalance");

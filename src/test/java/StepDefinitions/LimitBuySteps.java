@@ -24,9 +24,10 @@ public class LimitBuySteps {
         buyerSpotPage = new SpotPage(driver);
     }
 
-    @Given("the buyer navigates to the spot order placement page")
-    public void the_buyer_navigates_to_the_spot_order_placement_page() {
-        driver.get("http://localhost:5173/trade/spot/CAR.088"); // Replace with actual URL
+    @Given("the buyer navigates to the spot order placement page {string}")
+    public void the_buyer_navigates_to_the_spot_order_placement_page(String carbonCredit) {
+        String url = "http://localhost:5173/trade/spot/" + carbonCredit;
+        driver.get(url);
     }
 
     @When("the buyer selects the order type")
@@ -99,10 +100,10 @@ public class LimitBuySteps {
         assertTrue("All orders should be canceled successfully, but some cancellations of spot orders of type Limit failed.", ordersCanceled);
     }
 
-    @And("buyer cancels all open spot limit sell orders")
+    @When("buyer cancels all open spot limit sell orders")
     public void buyer_cancels_all_open_spot_limit_sell_orders() throws InterruptedException {
-        // Wait for 10 seconds
-        Thread.sleep(6000);
+        // Wait for 4 seconds
+        Thread.sleep(8000);
 
         buyerSpotPage.clickCancelAllButton();
         Assert.assertTrue(buyerSpotPage.isSuccessMessageDisplayed(), "Success message is not displayed");
@@ -111,7 +112,7 @@ public class LimitBuySteps {
         Assert.assertEquals(buyerSpotPage.getSuccessMessageText(), expectedMessage);
     }
 
-    @And("buyer all orders should be canceled successfully")
+    @Then("buyer all orders should be canceled successfully")
     public void buyer_all_orders_should_be_canceled_successfully() {
         // Refresh the current page
         driver.navigate().refresh();
