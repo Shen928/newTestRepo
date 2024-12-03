@@ -38,28 +38,7 @@ Feature: Seller Spot Limit Full Filled Order Placement and Cancellation
       | CAR.088       | 8.00             | 1        |
 
   Scenario: Seller should able to cancel all spot limit sell orders
-    Given seller cancels
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  all open spot limit sell orders
+    Given seller cancels all open spot limit sell orders
     Then seller all orders should be canceled successfully
 
   Scenario: Validate seller account balance after successful cancel all open orders

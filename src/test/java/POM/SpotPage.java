@@ -25,8 +25,11 @@ public class SpotPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(id = "limit-order-button")
-    WebElement orderType;
+    @FindBy(css = "[data-test='limit-order-btn']")
+    WebElement limitOrderType;
+
+    @FindBy(css = "[data-test='market-order-btn']")
+    WebElement marketOrderType;
 
     @FindBy(id = "sell-price")
     WebElement sellPriceInput;
@@ -49,7 +52,7 @@ public class SpotPage {
 
 
     // Locate all order id rows
-    @FindBy(css = "[data-test='openOrderId']")
+    @FindBy(css = "[data-test='open-order-id']")
     List<WebElement> openOrderIds;
 
 
@@ -63,7 +66,7 @@ public class SpotPage {
     WebElement submitBuyButton;
 
     public void selectLimitOrderType() {
-        orderType.click();
+        limitOrderType.click();
     }
 
     public void enterBuyPrice(String price) {

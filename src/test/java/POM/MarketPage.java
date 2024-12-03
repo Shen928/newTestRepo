@@ -12,8 +12,9 @@ public class MarketPage {
     WebElement txt_lbl;
 
     // Method to check if the market page is loaded
-    public void is_load_market_page() {
+    public boolean is_load_market_page() {
         txt_lbl.isDisplayed();
+        return true;
     }
 
     public MarketPage(WebDriver driver){

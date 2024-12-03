@@ -1,29 +1,40 @@
 package StepDefinitions;
 
+import BaseClasses.Base;
 import CommonClasses.DriverManager;
 import CommonClasses.ScenarioContext;
+
 import POM.LoginPage;
 import POM.MarketPage;
 import POM.MyAccountPage;
+
+import com.aventstack.extentreports.Status;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.io.FileUtils;
 
-public class SellerAccountSteps {
+
+public class SellerAccountSteps extends Base {
     //Defined web driver
     private WebDriver driver;
     private LoginPage loginPage;
     private MarketPage marketPage;
     private MyAccountPage myAccountPage;
-
 
     // Static map to store account balances and credits
     public static Map<String, Double> accountBalances = new HashMap<>();
@@ -39,15 +50,17 @@ public class SellerAccountSteps {
     public Double totalTradeAmount;
     public Double totalBuyAmount;
     public Double remainBlockedAmount;
+    // ExtentTest for logging test steps
 
 
 //    // Constructor or dependency injection for initial account values
-    public SellerAccountSteps(BuyerAccountSteps userAccountBeforeSteps) {
+    public SellerAccountSteps() {
         // Retrieve initial balances from UserAccountBeforeSteps
         this.initialAccountBalances = new HashMap<>(accountBalances);
         this.initialCreditBalances = new HashMap<>(creditsBalances);
         this.newAccountBalances = new HashMap<>();
         this.newCreditBalances = new HashMap<>();
+
     }
 
     @Before
@@ -56,6 +69,7 @@ public class SellerAccountSteps {
         myAccountPage = new MyAccountPage(driver);
         loginPage = new LoginPage(driver);
         marketPage = new MarketPage(driver);
+
 
     }
 
@@ -66,6 +80,9 @@ public class SellerAccountSteps {
         loginPage.enterPassword("EX2@xeptagon.coM");         // Use valid password
         loginPage.clickLoginButton();
         marketPage.is_load_market_page();
+
+        // Log the result of login action
+
 
     }
 
@@ -83,6 +100,10 @@ public class SellerAccountSteps {
         accountBalances.put("grossBalance", myAccountPage.getGrossBalance());
         accountBalances.put("availableBalance", myAccountPage.getAvailableBalance());
         accountBalances.put("blockedAmount", myAccountPage.getBlockedBalance());
+        logReport("Spot Limit Feature", Status.PASS, "seller retrieves the before account balances", true);
+//        // Take screenshot
+//        screenshotUtil.captureScreenshot("Before_Account_Balances");
+//        ScreenshotUtil.takeScreenshot(driver, "account_balance_before");
     }
 
     @Then("seller retrieves the before credit balances for {string}")
@@ -92,6 +113,7 @@ public class SellerAccountSteps {
         creditsBalances.put("totalCredits", myAccountPage.getTotalCredits(carbonCredit));
         creditsBalances.put("availableCredits", myAccountPage.getAvailableCredits(carbonCredit));
         creditsBalances.put("blockedCredits", myAccountPage.getBlockedCredits(carbonCredit));
+        logReport("Spot Limit Cancelled Feature", Status.PASS, "seller retrieves the before credit balances for " + carbonCredit, true);
     }
 
     @Given("seller retrieve the after account balance")
@@ -270,6 +292,19 @@ public class SellerAccountSteps {
         myAccountPage.clickLogOutButton();
 
 
+    }
+
+    // Method to take screenshot
+    public void takeScreenshot(String stepName) {
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String fileName = "screenshots/" + stepName + "_" + timestamp + ".png";
+        try {
+            FileUtils.copyFile(srcFile, new File(fileName));
+            System.out.println("Screenshot captured: " + fileName);
+        } catch (IOException e) {
+            System.out.println("Failed to capture screenshot: " + e.getMessage());
+        }
     }
 
 }

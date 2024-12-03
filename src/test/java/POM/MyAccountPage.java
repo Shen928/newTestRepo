@@ -24,37 +24,37 @@ public class MyAccountPage {
     }
 
     // Locate the web elements using @FindBy
-    @FindBy(css = "[data-test='gross_balance']")
+    @FindBy(css = "[data-test='gross-balance']")
     WebElement grossBalanceElement;
 
-    @FindBy(css = "[data-test='available_balance']")
+    @FindBy(css = "[data-test='available-balance']")
     WebElement availableBalanceElement;
 
-    @FindBy(css = "[data-test='blocked_amount']")
+    @FindBy(css = "[data-test='blocked-amount']")
     WebElement blockedAmountElement;
 
     @FindBy(css = "[data-test='pop-icon']")
     WebElement popIcon;
 
     // Locate the carbon credits table
-    @FindBy(css = "[data-test='carbonCreditsTable']")
+    @FindBy(css = "[data-test='carbon-credits-table']")
     WebElement carbonCreditsTable;
 
     // Locate all carbon credit rows (symbols)
-    @FindBy(css = "[data-test='carbonCredit']")
+    @FindBy(css = "[data-test='carbon-credit']")
     List<WebElement> carbonCreditSymbols;
 
     // Locate the available Quantity, last price, and balance columns
-    @FindBy(css = "[data-test='availableQuantity']")
+    @FindBy(css = "[data-test='available-quantity']")
     List<WebElement> availableQuantityCells;
 
-    @FindBy(css = "[data-test='totalQuantity']")
+    @FindBy(css = "[data-test='total-quantity']")
     List<WebElement> totalQuantityCells;
 
-    @FindBy(css = "[data-test='blockedQuantity']")
+    @FindBy(css = "[data-test='blocked-quantity']")
     List<WebElement> blockedQuantity;
 
-    @FindBy(css = "[data-test='lastPrice']")
+    @FindBy(css = "[data-test='last-price']")
     List<WebElement> lastPriceCells;
 
     @FindBy(css = "[data-test='logout-btn']")
