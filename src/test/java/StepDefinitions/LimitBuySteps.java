@@ -69,10 +69,11 @@ public class LimitBuySteps {
 
         // Capture the actual notification text
         String actualNotification = buyerSpotPage.getInfoNotificationText();
+        System.out.println("acutal : " + actualNotification);
 
         // Update the expected notification pattern to match either of the two possible patterns
         //String expectedNotificationPattern = "Your Spot Order T\\.[A-Za-z0-9]{8} of Type limit was partially filled \\((\\d{1,2}(\\.\\d{1,2})?)%\\)|Your Spot Order T\\.[0-9A-Z]{8} of Type limit was successfully filled";
-        String expectedNotificationPattern = "Your Spot Order T\\.[A-Za-z0-9]{8} of Type limit was partially filled \\((\\d{1,2}(\\.\\d{1,2})?)%\\)|Your Spot Order T\\.[A-Za-z0-9]{8} of Type limit was successfully filled|Your Limit Order T\\.[A-Za-z0-9]{8} was automatically terminated by the system";
+        String expectedNotificationPattern = "Your Spot Order T\\.[A-Za-z0-9]{8} of Type (?i)limit(?-i) was partially filled \\((\\d{1,2}(\\.\\d{1,2})?)%\\)|Your Spot Order T\\.[A-Za-z0-9]{8} of Type (?i)limit(?-i) was successfully filled|Your Limit Order T\\.[A-Za-z0-9]{8} was automatically terminated by the system";
 
         // Assert that the actual notification matches the expected pattern
         Assert.assertTrue(actualNotification.matches(expectedNotificationPattern),

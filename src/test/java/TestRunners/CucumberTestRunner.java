@@ -33,6 +33,10 @@ import org.testng.annotations.BeforeClass;
 @CucumberOptions(
         features = {
                 "src/test/resources/spot/01_Spot_Limit_Filled.feature", // Path to feature files
+//                "src/test/resources/spot/02_Spot_Limit_Cancelled.feature",
+//                "src/test/resources/spot/03_Spot_Limit_Partially_Filled_and_Cancelled.feature",
+//                "src/test/resources/spot/04_Spot_Limit_Terminated.feature",
+//                "src/test/resources/spot/05_Spot_Limit_Partially_Terminated.feature",
         },
         glue = {"StepDefinitions"}, // Path to step definition classes
         plugin = {

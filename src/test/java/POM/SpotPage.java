@@ -31,38 +31,35 @@ public class SpotPage {
     @FindBy(css = "[data-test='market-order-btn']")
     WebElement marketOrderType;
 
-    @FindBy(id = "sell-price")
+    @FindBy(css = "[data-test='sell-price']")
     WebElement sellPriceInput;
 
-    @FindBy(id = "sell-quantity")
+    @FindBy(css = "[data-test='sell-quantity']")
     WebElement sellQuantityInput;
 
-    @FindBy(id = "sell-btn")
+    @FindBy(css = "[data-test='sell-btn']")
     WebElement submitSellButton;
 
-    @FindBy(id = "success-message")
+    @FindBy(css = "[data-test='success-message']")
     WebElement successMessage;
 
-    @FindBy(id="info-notification")
+    @FindBy(css = "[data-test='info-notification']")
     WebElement infoNotification;
 
     @FindBy(css = "[data-test='cancel-all-btn']")
     WebElement cancelAllButton;
 
-
-
     // Locate all order id rows
     @FindBy(css = "[data-test='open-order-id']")
     List<WebElement> openOrderIds;
 
-
-    @FindBy(id = "buy-price")
+    @FindBy(css = "[data-test='buy-price']")
     WebElement buyPriceInput;
 
-    @FindBy(id = "buy-quantity")
+    @FindBy(css = "[data-test='buy-quantity']")
     WebElement buyQuantityInput;
 
-    @FindBy(id = "buy-btn")
+    @FindBy(css = "[data-test='buy-btn']")
     WebElement submitBuyButton;
 
     public void selectLimitOrderType() {

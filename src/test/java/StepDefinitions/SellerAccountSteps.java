@@ -90,6 +90,7 @@ public class SellerAccountSteps extends Base {
     public void seller_navigate_to_the_account_page() {
         // Use the provided account page URL
         driver.get("http://localhost:5173/myAssets/myAccount");
+        logReport("Spot Limit Feature", Status.PASS, "seller navigate to the account page", true);
     }
 
     @When("seller retrieves the before account balances")

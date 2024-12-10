@@ -28,14 +28,14 @@ public class LoginSteps extends Base {
         driver.get("http://localhost:5173/signIn");
 
         login = new LoginPage(driver);
-        logReport("Spot Limit Feature", Status.INFO, "clicks on Login Button", false);
+        logReport("Spot Limit Feature", Status.INFO, "User navigate to the login page", false);
     }
 
     @When("user enter valid {string} and {string}")
     public void user_enter_valid_email_and_pw(String email, String password) {
         login.enterEmail(email);
         login.enterPassword(password);
-
+        logReport("Spot Limit Feature", Status.INFO, "User enter valid email and password", false);
     }
 
     @Then("clicks on Login Button")
@@ -50,11 +50,12 @@ public class LoginSteps extends Base {
 
         if (marketLoad.is_load_market_page()) {
 //            hardPause(2);
-            logReport("Spot Limit Feature", Status.PASS, "User navigated to login page", true);
-            logReport("Spot Limit Cancelled Feature", Status.PASS, "User navigated to login page", true);
+            logReport("Spot Limit Feature", Status.PASS, "User successfully login & navigated to market page", true);
+//            logReport("Spot Limit Cancelled Feature", Status.PASS, "User successfully login & navigated to market page", true);
+//            logReport("azx", Status.PASS, "User successfully login & navigated to azxe", true);
         } else {
-            logReport("Spot Limit Feature", Status.PASS, "User failed to navigate login page", true);
-            logReport("Spot Limit Cancelled Feature", Status.PASS, "User failed to navigate login page", true);
+            logReport("Spot Limit Feature", Status.PASS, "User failed to login & navigate to the market page", true);
+            //logReport("Spot Limit Cancelled Feature", Status.PASS, "User failed to login & navigate to the market page", true);
         }
     }
 }
